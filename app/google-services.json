@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "111693982613",
+    "project_id": "byte-task-a5e21",
+    "storage_bucket": "byte-task-a5e21.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:111693982613:android:a9db51404cdf2bf9d4649c",
+        "android_client_info": {
+          "package_name": "com.test.bytetask"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYb7QBEovw2nG_gDOUlMoJ2A_v0pZtuiw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
