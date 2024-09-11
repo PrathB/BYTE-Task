@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.test.bytetask"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.test.bytetask"
