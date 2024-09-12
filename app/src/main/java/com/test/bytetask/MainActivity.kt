@@ -33,11 +33,22 @@ import com.test.bytetask.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private var binding : ActivityMainBinding? = null
     private lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private lateinit var auth: FirebaseAuth
+    private var userId :String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        auth = FirebaseAuth.getInstance()
+        // Register a new user
+        val email = "pratham11.batra@gmail.com"
+        val password = "test123"
+        loginUser(email,password)
+
+        val user = FirebaseAuth.getInstance().currentUser
+        userId = user?.uid
 
         FirebaseApp.initializeApp(this)
 
@@ -79,6 +90,21 @@ class MainActivity : AppCompatActivity() {
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
                 || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
     }
+    private fun loginUser(email: String, password: String) {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // User is signed in successfully
+                    val user = auth.currentUser
+                    Toast.makeText(this, "User logged in: ${user?.email}", Toast.LENGTH_SHORT).show()
+
+                    // Proceed to the main screen or the location tracking logic
+                } else {
+                    // If sign-in fails, display an error message
+                    Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
     private fun showEnableLocationDialog() {
         val alertDialog = AlertDialog.Builder(this)
         alertDialog.setTitle("Location Services Disabled")
@@ -115,7 +141,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun updateLocationInFirebase(lat: Double, lon: Double) {
         val database = FirebaseDatabase.getInstance()
-        val userLocationRef = database.getReference("user_locations").child("userId")
+        val userLocationRef = database.getReference("user_locations").child(userId!!)
         userLocationRef.setValue(UserLocation(lat, lon))
         .addOnSuccessListener {
             Log.d("Firebase", "Location updated successfully")
@@ -124,10 +150,5 @@ class MainActivity : AppCompatActivity() {
                 Log.e("Firebase", "Failed to update location: ${it.message}")
             }
     }
-
-    private fun sendLocationToSocket(lat: Double, lon: Double) {
-        // Socket connection code to send location data for live tracking
-    }
-
 
 }

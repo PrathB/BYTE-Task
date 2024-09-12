@@ -6,4 +6,5 @@
     <color name="main_green">#38a169</color>
     <color name="button_blue">#1d2d44</color>
     <color name="ripple_grey">#adb5bd</color>
+    <color name="main_grey">#8F8F8F</color>
 </resources>
