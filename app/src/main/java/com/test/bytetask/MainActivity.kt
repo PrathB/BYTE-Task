@@ -24,6 +24,7 @@ import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.permissionx.guolindev.PermissionX
@@ -37,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        FirebaseApp.initializeApp(this)
 
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
@@ -111,13 +114,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateLocationInFirebase(lat: Double, lon: Double) {
-//        val database = FirebaseDatabase.getInstance()
-//        val userLocationRef = database.getReference("user_locations").child("userId")
-//        userLocationRef.setValue(UserLocation(lat, lon))
-            val locObj = UserLocation(lat,lon)
-            Log.i("lat:",locObj.latitude.toString())
-            Log.i("lon:",locObj.longitude.toString())
-            Log.i("timestamp:",locObj.timestamp.toString())
+        val database = FirebaseDatabase.getInstance()
+        val userLocationRef = database.getReference("user_locations").child("userId")
+        userLocationRef.setValue(UserLocation(lat, lon))
+        .addOnSuccessListener {
+            Log.d("Firebase", "Location updated successfully")
+        }
+            .addOnFailureListener {
+                Log.e("Firebase", "Failed to update location: ${it.message}")
+            }
     }
 
     private fun sendLocationToSocket(lat: Double, lon: Double) {
