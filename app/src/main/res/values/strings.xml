@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">BYTE Task</string>
+    <string name="enable_location_tracking">Enable Location Tracking</string>
+    <string name="BYTE">BYTE</string>
+    <string name="sign_in_to_continue">Sign In to continue</string>
+    <string name="type_your_email">Type your Email</string>
+    <string name="type_your_password">Type Your Password</string>
+    <string name="sign_in">Sign In</string>
+    <string name="not_registered_yet_sign_up">Not Registered Yet , Sign Up !</string>
+    <string name="sign_up_to_continue">Sign Up to continue</string>
+    <string name="retype_your_password">Retype Your Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_registered_sign_in">Already Registered , Sign In !</string>
 </resources>
